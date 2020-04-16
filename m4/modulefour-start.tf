@@ -16,6 +16,8 @@ variable "subnet1_address_space" {
   default = "10.1.0.0/24"
 }
 
+variable "rob_home_ip" {}
+
 ##################################################################################
 # PROVIDERS
 ##################################################################################
@@ -102,7 +104,7 @@ resource "aws_security_group" "nginx-sg" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = [var.rob_home_ip]
   }
 
   # HTTP access from anywhere
@@ -110,7 +112,7 @@ resource "aws_security_group" "nginx-sg" {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = [var.rob_home_ip]
   }
 
   # outbound internet access
