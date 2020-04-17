@@ -21,6 +21,7 @@ variable "subnet2_address_space" {
 variable "bucket_name_prefix" {}
 variable "billing_code_tag" {}
 variable "environment_tag" {}
+variable "rob_home_ip" {}
 
 ##################################################################################
 # PROVIDERS
@@ -149,7 +150,7 @@ resource "aws_security_group" "elb-sg" {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = [var.rob_home_ip]
   }
 
   #allow all outbound
@@ -174,7 +175,7 @@ resource "aws_security_group" "nginx-sg" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = [var.rob_home_ip]
   }
 
   # HTTP access from the VPC
@@ -182,7 +183,7 @@ resource "aws_security_group" "nginx-sg" {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = [var.network_address_space]
+    cidr_blocks = [var.network_address_space, var.rob_home_ip]
   }
 
   # outbound internet access
