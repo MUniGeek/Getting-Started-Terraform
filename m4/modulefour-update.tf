@@ -149,7 +149,7 @@ resource "aws_security_group" "nginx-sg" {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = [var.network_address_space]
+    cidr_blocks = [var.rob_home_ip, var.network_address_space]
   }
 
   # outbound internet access
